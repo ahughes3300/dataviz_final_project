@@ -32,30 +32,6 @@ samplen<-sample_n(weather_tpa, 4)
 See https://www.reisanar.com/slides/relationships-models#10 for a reminder on how to use this type of dataset with the `lubridate` package for dates and times (example included in the slides uses data from 2016).
 
 
-```r
-library(lubridate)
-
-
-tpa_clean <- weather_tpa %>% 
-  unite("doy", year, month, day, sep = "-") %>% 
-  mutate(doy = ymd(doy), 
-         max_temp = as.double(max_temp), 
-         min_temp = as.double(min_temp), 
-         precipitation = as.double(precipitation))
-
-options(repr.plot.width = 6, repr.plot.height = 3)
-
-ggplot(tpa_clean, aes(max_temp, fill=month(ymd(doy),))) +
-  geom_histogram(binwidth=3,colour = "white",
-                 lwd = 0.8,
-                 linetype = 1,
-                 position = "identity")+ facet_wrap(~month(ymd(doy),label=TRUE,abbr = FALSE),ncol=4)+ 
-  #scale_fill_distiller(palette = "Viridis")
-  scale_fill_viridis(guide = "none")+theme_bw() + theme(axis.text = element_text(size = 13),text = element_text(size = 17))  +
-  xlab("Maxium temperatures") + ylab("Number of Days")+ylim(0,20)+
-    scale_x_continuous(breaks = seq(60, 90, 10), lim = c(55, 97))
-```
-
 ```
 ## Warning: Removed 3 rows containing non-finite values (`stat_bin()`).
 ```
@@ -64,7 +40,7 @@ ggplot(tpa_clean, aes(max_temp, fill=month(ymd(doy),))) +
 ## Warning: Removed 24 rows containing missing values (`geom_bar()`).
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 
@@ -87,16 +63,6 @@ Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw
 
 
 
-```r
-# ggplot(diamonds, aes(carat, fill = cut)) +
-#   geom_density(position = "stack",)
-options(repr.plot.width = 3, repr.plot.height = 2)
-ggplot(tpa_clean, aes(max_temp)) +
-  geom_density(position = "stack",bw = 0.5,fill="#7F7F7F",kernel="epanechnikov",size=.8)+  scale_fill_grey()+theme_minimal() +ylim(0, 0.08)+ theme(axis.text = element_text(size = 13),text = element_text(size = 17)) +
-    scale_x_continuous(breaks = seq(60, 90, 10), lim = c(55, 97))+
-  xlab("Maxium temperature") + ylab("density")
-```
-
 ```
 ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
@@ -109,21 +75,7 @@ ggplot(tpa_clean, aes(max_temp)) +
 ## Warning: Removed 3 rows containing non-finite values (`stat_density()`).
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
-
-```r
-#https://rdrr.io/r/stats/density.html kernel="optcosine"
-
-# density(x, …)
-# # S3 method for default
-# density(x, bw = "nrd0", adjust = 1,
-#         kernel = c("gaussian", "epanechnikov", "rectangular",
-#                    "triangular", "biweight",
-#                    "cosine", "optcosine"),
-#         weights = NULL, window = kernel, width,
-#         give.Rkern = FALSE,
-#         n = 512, from, to, cut = 3, na.rm = FALSE, …)
-```
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 
@@ -134,23 +86,6 @@ ggplot(tpa_clean, aes(max_temp)) +
 Hint: default options for `geom_density()` were used. 
 
 
-
-```r
-# ggplot(tpa_clean, aes(max_temp)) +
-#   geom_density(size=1,fill="red")+ facet_wrap(~month(ymd(doy),label=TRUE))+
-#     scale_color_viridis() 
-
-# ggplot(tpa_clean, aes(max_temp,fill=month(ymd(doy),label=TRUE))) +
-#   geom_density(size=1)+ facet_wrap(~month(ymd(doy),label=TRUE))+
-#     scale_color_viridis(guide = "none") +  guides(fill = FALSE)   
-
-ggplot(tpa_clean, aes(max_temp,fill=month(ymd(doy),label=TRUE))) +
-  geom_density(size=1)+ facet_wrap(~month(ymd(doy),label=TRUE,abbr = FALSE))+
-    scale_color_viridis(guide = "none") +  guides(fill = FALSE)+ 
-theme_bw() + theme(axis.text = element_text(size = 13),text = element_text(size = 17))  +
-  xlab("Maxium temperatures") + ylab("")+#ylim(0,.38)+
-    scale_x_continuous(breaks = seq(60, 90, 10), lim = c(55, 100))+scale_y_continuous(breaks = seq(0, .3, .05), lim = c(0, .38))+ ggtitle("Density plots for each month in 2022")   
-```
 
 ```
 ## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
@@ -164,7 +99,7 @@ theme_bw() + theme(axis.text = element_text(size = 13),text = element_text(size 
 ## Warning: Removed 2 rows containing non-finite values (`stat_density()`).
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 (d) Generate a plot like the chart below:
@@ -175,16 +110,6 @@ theme_bw() + theme(axis.text = element_text(size = 13),text = element_text(size 
 Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function paying close attention to the `quantile_lines` and `quantiles` parameters. The plot above uses the `plasma` option (color scale) for the _viridis_ palette.
 
 
-
-```r
-ggplot(tpa_clean, aes(x = max_temp, y = month(ymd(doy),label=TRUE,abbr = FALSE), fill = stat(x))) +
-  geom_density_ridges_gradient(size=1,quantile_lines = TRUE,# alpha = 0.75,
-                      quantiles = 2) +
-  scale_fill_viridis_c(name = "Depth", option = "C") +
-  coord_cartesian(clip = "off") + # To avoid cut off
-  theme_minimal()+xlab("Maxium temperature (in Fahrenheit degrees)") + ylab("")+
-    scale_x_continuous(breaks = seq(50, 100, 10), lim = c(50, 100))+ theme(axis.text = element_text(size = 13),text = element_text(size = 17),legend.title = element_blank()) +labs(color = NULL)
-```
 
 ```
 ## Warning: `stat(x)` was deprecated in ggplot2 3.4.0.
@@ -206,13 +131,27 @@ ggplot(tpa_clean, aes(x = max_temp, y = month(ymd(doy),label=TRUE,abbr = FALSE),
 ## generated.
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
 
 
 
 (e) Create a plot of your choice that uses the attribute for precipitation _(values of -99.9 for temperature or -99.99 for precipitation represent missing data)_.
 
 
+```r
+t2 <- tpa_clean %>%
+filter(precipitation > 0)
+
+
+ggplot(tpa_clean, aes(y=max_temp, x=precipitation)) +
+  geom_point(color="red4")+geom_smooth(fill="lightblue", color="blue4")+theme_classic()
+```
+
+```
+## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 ## PART 2 
 
@@ -259,7 +198,7 @@ ggplot(poly_tokens, aes(x = n, y = fct_rev(word), fill = news_title)) +
   theme_minimal()
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](lastname_project_03_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 ```r
 polynews <- read_csv("../data/flpoly_news_SP23.csv", col_types = cols())
@@ -397,7 +336,7 @@ ggplot(top10_words, aes(x =fct_rev(reorder(word, -n)), y = n, fill = sentiment))
   theme_minimal()+coord_flip()#+
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](lastname_project_03_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 ```r
   # scale_fill_manual(values=c("red3",
@@ -421,7 +360,7 @@ ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = s
   theme_minimal()+coord_flip()#+
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-15-2.png)<!-- -->
+![](lastname_project_03_files/figure-html/unnamed-chunk-16-2.png)<!-- -->
 
 ```r
   # scale_fill_manual(values=c("red3",
@@ -459,7 +398,7 @@ ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = s
                              ))
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![](lastname_project_03_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 
 
@@ -471,14 +410,14 @@ ggplot(total_sents, aes(x=sentiment, y=sum_sent)) +
   geom_bar(stat = "identity")+coord_flip()
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](lastname_project_03_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 ```r
 ggplot(total_sents, aes(x=reorder(sentiment, +sum_sent), y=sum_sent)) + 
   geom_bar(stat = "identity")+coord_flip()
 ```
 
-![](lastname_project_03_files/figure-html/unnamed-chunk-17-2.png)<!-- -->
+![](lastname_project_03_files/figure-html/unnamed-chunk-18-2.png)<!-- -->
 
 ```r
 # library(patternplot)

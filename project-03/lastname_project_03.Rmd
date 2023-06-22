@@ -30,7 +30,7 @@ samplen<-sample_n(weather_tpa, 4)
 
 See https://www.reisanar.com/slides/relationships-models#10 for a reminder on how to use this type of dataset with the `lubridate` package for dates and times (example included in the slides uses data from 2016).
 
-```{r}
+```{r, echo = FALSE, out.width="80%", fig.align='center'}
 library(lubridate)
 
 
@@ -78,7 +78,7 @@ knitr::include_graphics("https://github.com/reisanar/figs/raw/master/tpa_max_tem
 Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw = 0.5`.
 
 
-```{r}
+```{r, echo = FALSE, out.width="80%", fig.align='center'}
 # ggplot(diamonds, aes(carat, fill = cut)) +
 #   geom_density(position = "stack",)
 options(repr.plot.width = 3, repr.plot.height = 2)
@@ -111,7 +111,7 @@ knitr::include_graphics("https://github.com/reisanar/figs/raw/master/tpa_max_tem
 Hint: default options for `geom_density()` were used. 
 
 
-```{r}
+```{r, echo = FALSE, out.width="80%", fig.align='center'}
 # ggplot(tpa_clean, aes(max_temp)) +
 #   geom_density(size=1,fill="red")+ facet_wrap(~month(ymd(doy),label=TRUE))+
 #     scale_color_viridis() 
@@ -139,7 +139,7 @@ knitr::include_graphics("https://github.com/reisanar/figs/raw/master/tpa_max_tem
 Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function paying close attention to the `quantile_lines` and `quantiles` parameters. The plot above uses the `plasma` option (color scale) for the _viridis_ palette.
 
 
-```{r}
+```{r, echo = FALSE, out.width="80%", fig.align='center'}
 ggplot(tpa_clean, aes(x = max_temp, y = month(ymd(doy),label=TRUE,abbr = FALSE), fill = stat(x))) +
   geom_density_ridges_gradient(size=1,quantile_lines = TRUE,# alpha = 0.75,
                       quantiles = 2) +
@@ -153,7 +153,18 @@ ggplot(tpa_clean, aes(x = max_temp, y = month(ymd(doy),label=TRUE,abbr = FALSE),
 
 (e) Create a plot of your choice that uses the attribute for precipitation _(values of -99.9 for temperature or -99.99 for precipitation represent missing data)_.
 
+```{r}
 
+
+
+t2 <- tpa_clean %>%
+filter(precipitation > 0)
+
+
+ggplot(tpa_clean, aes(y=max_temp, x=precipitation)) +
+  geom_point(color="red4")+geom_smooth(fill="lightblue", color="blue4")+theme_classic()
+
+```
 
 ## PART 2 
 
