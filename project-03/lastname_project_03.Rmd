@@ -188,27 +188,7 @@ Make sure to include a copy of the dataset in the `data/` folder, and reference 
 
 (to get the "raw" data from any of the links listed above, simply click on the `raw` button of the GitHub page and copy the URL to be able to read it in your computer using the `read_csv()` function)
 
-```{r}
-polynews <- read_csv("../data/flpoly_news_SP23.csv", col_types = cols())
-polynews<- head(polynews, 6)
 
-poly_tokens <- polynews %>% 
-  unnest_tokens(word, news_summary) %>%
-  anti_join(stop_words, by = "word") %>% # remove stopwords
-  group_by(news_title) %>% 
-  count(word, sort = TRUE) %>% 
-  top_n(9, n) %>% 
-  ungroup() %>% 
-  mutate(word = fct_inorder(word))
-# create a bar plot showing the token frequency
-ggplot(poly_tokens, aes(x = n, y = fct_rev(word), fill = news_title)) +
-  geom_col() +
-  guides(fill = FALSE) +
-  labs(x = NULL, y = NULL) +
-  scale_fill_viridis_d() +
-  facet_wrap(vars(news_title, n=2), scales = "free_y") +
-  theme_minimal()
-```
 ```{r}
 polynews <- read_csv("../data/flpoly_news_SP23.csv", col_types = cols())
 poly_tokens <- polynews %>% 
@@ -227,24 +207,7 @@ polywords_total<- polywords %>% count(word)
 
 
 ```{r}
-# poly_sent <- polynews %>% 
-#   unnest_tokens(word, text) %>%
-#   group_by(news_title) %>% 
-#   mutate(word_count = 1:n(),
-#          index = word_count %/% 500 + 1) %>% 
-#   inner_join(get_sentiments("bing")) %>%
-#   count(news_title, index = index, sentiment) %>% 
-#   pivot_wider(names_from = sentiment, values_from = n) %>%
-#   mutate(net_sentiment = positive - negative)
 
-poly_sent <- polywords %>% 
-  group_by(word) %>% 
-  mutate(word_count = 1:n(),
-         index = word_count %/% 500 + 1) %>% 
-  inner_join(get_sentiments("nrc")) %>%
-  count(word, index = index, sentiment) %>% 
-  pivot_wider(names_from = sentiment, values_from = n) %>%
-  mutate(net_sentiment = positive - negative)
 
 poly_sent2 <- polywords_total %>% 
   group_by(word) %>% 
@@ -260,14 +223,6 @@ total_sents
 
 ```
 
-```{r}
-#write.csv(total_sents,"total_sents.csv", row.names=FALSE)
-```
-
-
-```{r}
-#read.csv("total_sents.csv")
-```
 
 
 ```{r}
@@ -346,88 +301,6 @@ ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = s
 
 ```
 
-
-
-
-
-```{r}
-ggplot(total_sents, aes(x=sentiment, y=sum_sent)) + 
-  geom_bar(stat = "identity")+coord_flip()
-
-ggplot(total_sents, aes(x=reorder(sentiment, +sum_sent), y=sum_sent)) + 
-  geom_bar(stat = "identity")+coord_flip()
-
-# library(patternplot)
-# library(jpeg)
-# library(ggplot2)
-# 
-# childcare<-readJPEG(system.file("img", "childcare.jpg", package="patternplot"))
-# food<-readJPEG(system.file("img", "food.jpg", package="patternplot"))
-# housing <-readJPEG(system.file("img", "housing.jpg", package="patternplot"))
-# 
-# #Example 1
-# data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
-# data<-data[which(data$Location=='City 1'),]
-# x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
-# y<-data$Amount
-# pattern.type<-list(housing, food, childcare)
-# imagebar(data,x, y,group=NULL,pattern.type=pattern.type,vjust=-1, hjust=0.5,
-#          frame.color='black',
-#          ylab='Monthly Expenses, Dollars')+ggtitle('(A) Bar Chart with Images')
-
-```
-
-
-### Option (B): Data on Concrete Strength 
-
-Concrete is the most important material in **civil engineering**. The concrete compressive strength is a highly nonlinear function of _age_ and _ingredients_. The dataset used here is from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php), and it contains 1030 observations with 9 different attributes 9 (8 quantitative input variables, and 1 quantitative output variable). A data dictionary is included below: 
-
-
-Variable                      |    Notes                
-------------------------------|-------------------------------------------
-Cement                        | kg in a $m^3$ mixture             
-Blast Furnace Slag            | kg in a $m^3$ mixture  
-Fly Ash                       | kg in a $m^3$ mixture             
-Water                         | kg in a $m^3$ mixture              
-Superplasticizer              | kg in a $m^3$ mixture
-Coarse Aggregate              | kg in a $m^3$ mixture
-Fine Aggregate                | kg in a $m^3$ mixture      
-Age                           | in days                                             
-Concrete compressive strength | MPa, megapascals
-
-
-Below we read the `.csv` file using `readr::read_csv()` (the `readr` package is part of the `tidyverse`)
-
-```{r}
-concrete <- read_csv("../data/concrete.csv", col_types = cols())
-```
-
-
-Let us create a new attribute for visualization purposes, `strength_range`: 
-
-```{r}
-new_concrete <- concrete %>%
-  mutate(strength_range = cut(Concrete_compressive_strength, 
-                              breaks = quantile(Concrete_compressive_strength, 
-                                                probs = seq(0, 1, 0.2))) )
-```
-
-
-
-1. Explore the distribution of 2 of the continuous variables available in the dataset. Do ranges make sense? Comment on your findings.
-
-2. Use a _temporal_ indicator such as the one available in the variable `Age` (measured in days). Generate a plot similar to the one shown below. Comment on your results.
-
-```{r, echo = FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("https://github.com/reisanar/figs/raw/master/concrete_strength.png")
-```
-
-
-3. Create a scatterplot similar to the one shown below. Pay special attention to which variables are being mapped to specific aesthetics of the plot. Comment on your results. 
-
-```{r, echo = FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("https://github.com/reisanar/figs/raw/master/cement_plot.png")
-```
 
 
 
