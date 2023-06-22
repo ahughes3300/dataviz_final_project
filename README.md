@@ -1,6 +1,7 @@
 # Data Visualization and Reproducible Research
 
-> Firstname Lastname. 
+> Alex HUghes
+> ahughes3300@floridapoly.edu
 
 Learn more about me in my [GitHub profile page](https://github.com/reiminer). 
 
