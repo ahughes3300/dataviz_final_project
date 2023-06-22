@@ -1,0 +1,61 @@
+---
+title: "test"
+output: html_document
+date: "2023-06-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+
+```{r}
+
+library(patternplot)
+library(jpeg)
+library(ggplot2)
+
+childcare<-readJPEG("happy.jpg")
+food<-readJPEG(system.file("img", "food.jpg", package="patternplot"))
+housing <-readJPEG(system.file("img", "housing.jpg", package="patternplot"))
+
+#Example 1
+data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
+data<-data[which(data$Location=='City 1'),]
+x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+y<-data$Amount
+pattern.type<-list(housing, food, childcare)
+imagebar(data,x, y,group=NULL,pattern.type=pattern.type,vjust=-1, hjust=0.5,
+frame.color='black',ylab='Monthly Expenses, Dollars')+ggtitle('(A) Bar Chart with Images')
+
+#Example 2
+data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
+group<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+y<-data$Amount
+x<-factor(data$Location, c('City 1', ' City 1'))
+pattern.type<-list(housing, food, childcare)
+g<-imagebar(data,x,y,group,pattern.type=pattern.type,vjust=-1,hjust=0.5,frame.color='black',
+ylab='Monthly Expenses, Dollars')+ggtitle('(B) Image Bar Chart with Two Grouping Variables')
+
+
+
+```
+

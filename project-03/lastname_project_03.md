@@ -20,22 +20,53 @@ Using the dataset obtained from FSU's [Florida Climate Center](https://climatece
 
 ```r
 library(tidyverse)
+library(ggplot2)
+library(viridis)
+library(ggridges)
+library(tidytext)
 weather_tpa <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/tpa_weather_2022.csv")
 # random sample 
-sample_n(weather_tpa, 4)
-```
-
-```
-## # A tibble: 4 × 7
-##    year month   day precipitation max_temp min_temp ave_temp
-##   <dbl> <dbl> <dbl>         <dbl>    <dbl>    <dbl>    <dbl>
-## 1  2022     6    18          0          98       81     89.5
-## 2  2022     4     3          0          80       68     74  
-## 3  2022    12    20          0.11       67       58     62.5
-## 4  2022     5    22          0          96       74     85
+samplen<-sample_n(weather_tpa, 4)
 ```
 
 See https://www.reisanar.com/slides/relationships-models#10 for a reminder on how to use this type of dataset with the `lubridate` package for dates and times (example included in the slides uses data from 2016).
+
+
+```r
+library(lubridate)
+
+
+tpa_clean <- weather_tpa %>% 
+  unite("doy", year, month, day, sep = "-") %>% 
+  mutate(doy = ymd(doy), 
+         max_temp = as.double(max_temp), 
+         min_temp = as.double(min_temp), 
+         precipitation = as.double(precipitation))
+
+options(repr.plot.width = 6, repr.plot.height = 3)
+
+ggplot(tpa_clean, aes(max_temp, fill=month(ymd(doy),))) +
+  geom_histogram(binwidth=3,colour = "white",
+                 lwd = 0.8,
+                 linetype = 1,
+                 position = "identity")+ facet_wrap(~month(ymd(doy),label=TRUE,abbr = FALSE),ncol=4)+ 
+  #scale_fill_distiller(palette = "Viridis")
+  scale_fill_viridis(guide = "none")+theme_bw() + theme(axis.text = element_text(size = 13),text = element_text(size = 17))  +
+  xlab("Maxium temperatures") + ylab("Number of Days")+ylim(0,20)+
+    scale_x_continuous(breaks = seq(60, 90, 10), lim = c(55, 97))
+```
+
+```
+## Warning: Removed 3 rows containing non-finite values (`stat_bin()`).
+```
+
+```
+## Warning: Removed 24 rows containing missing values (`geom_bar()`).
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+
+
 
 Using the 2022 data: 
 
@@ -45,11 +76,56 @@ Using the 2022 data:
 
 Hint: the option `binwidth = 3` was used with the `geom_histogram()` function.
 
+
+
+
 (b) Create a plot like the one below:
 
 <img src="https://github.com/reisanar/figs/raw/master/tpa_max_temps_density.png" width="80%" style="display: block; margin: auto;" />
 
 Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw = 0.5`.
+
+
+
+```r
+# ggplot(diamonds, aes(carat, fill = cut)) +
+#   geom_density(position = "stack",)
+options(repr.plot.width = 3, repr.plot.height = 2)
+ggplot(tpa_clean, aes(max_temp)) +
+  geom_density(position = "stack",bw = 0.5,fill="#7F7F7F",kernel="epanechnikov",size=.8)+  scale_fill_grey()+theme_minimal() +ylim(0, 0.08)+ theme(axis.text = element_text(size = 13),text = element_text(size = 17)) +
+    scale_x_continuous(breaks = seq(60, 90, 10), lim = c(55, 97))+
+  xlab("Maxium temperature") + ylab("density")
+```
+
+```
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+```
+
+```
+## Warning: Removed 3 rows containing non-finite values (`stat_density()`).
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+```r
+#https://rdrr.io/r/stats/density.html kernel="optcosine"
+
+# density(x, …)
+# # S3 method for default
+# density(x, bw = "nrd0", adjust = 1,
+#         kernel = c("gaussian", "epanechnikov", "rectangular",
+#                    "triangular", "biweight",
+#                    "cosine", "optcosine"),
+#         weights = NULL, window = kernel, width,
+#         give.Rkern = FALSE,
+#         n = 512, from, to, cut = 3, na.rm = FALSE, …)
+```
+
+
 
 (c) Create a plot like the one below:
 
@@ -57,12 +133,81 @@ Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw
 
 Hint: default options for `geom_density()` were used. 
 
+
+
+```r
+# ggplot(tpa_clean, aes(max_temp)) +
+#   geom_density(size=1,fill="red")+ facet_wrap(~month(ymd(doy),label=TRUE))+
+#     scale_color_viridis() 
+
+# ggplot(tpa_clean, aes(max_temp,fill=month(ymd(doy),label=TRUE))) +
+#   geom_density(size=1)+ facet_wrap(~month(ymd(doy),label=TRUE))+
+#     scale_color_viridis(guide = "none") +  guides(fill = FALSE)   
+
+ggplot(tpa_clean, aes(max_temp,fill=month(ymd(doy),label=TRUE))) +
+  geom_density(size=1)+ facet_wrap(~month(ymd(doy),label=TRUE,abbr = FALSE))+
+    scale_color_viridis(guide = "none") +  guides(fill = FALSE)+ 
+theme_bw() + theme(axis.text = element_text(size = 13),text = element_text(size = 17))  +
+  xlab("Maxium temperatures") + ylab("")+#ylim(0,.38)+
+    scale_x_continuous(breaks = seq(60, 90, 10), lim = c(55, 100))+scale_y_continuous(breaks = seq(0, .3, .05), lim = c(0, .38))+ ggtitle("Density plots for each month in 2022")   
+```
+
+```
+## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
+## of ggplot2 3.3.4.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_density()`).
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+
+
 (d) Generate a plot like the chart below:
 
 
 <img src="https://github.com/reisanar/figs/raw/master/tpa_max_temps_ridges_plasma.png" width="80%" style="display: block; margin: auto;" />
 
 Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function paying close attention to the `quantile_lines` and `quantiles` parameters. The plot above uses the `plasma` option (color scale) for the _viridis_ palette.
+
+
+
+```r
+ggplot(tpa_clean, aes(x = max_temp, y = month(ymd(doy),label=TRUE,abbr = FALSE), fill = stat(x))) +
+  geom_density_ridges_gradient(size=1,quantile_lines = TRUE,# alpha = 0.75,
+                      quantiles = 2) +
+  scale_fill_viridis_c(name = "Depth", option = "C") +
+  coord_cartesian(clip = "off") + # To avoid cut off
+  theme_minimal()+xlab("Maxium temperature (in Fahrenheit degrees)") + ylab("")+
+    scale_x_continuous(breaks = seq(50, 100, 10), lim = c(50, 100))+ theme(axis.text = element_text(size = 13),text = element_text(size = 17),legend.title = element_blank()) +labs(color = NULL)
+```
+
+```
+## Warning: `stat(x)` was deprecated in ggplot2 3.4.0.
+## ℹ Please use `after_stat(x)` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+```
+
+```
+## Picking joint bandwidth of 1.87
+```
+
+```
+## Warning: Using the `size` aesthetic with geom_segment was deprecated in ggplot2 3.4.0.
+## ℹ Please use the `linewidth` aesthetic instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+
 
 
 (e) Create a plot of your choice that uses the attribute for precipitation _(values of -99.9 for temperature or -99.99 for precipitation represent missing data)_.
@@ -90,6 +235,270 @@ Make sure to include a copy of the dataset in the `data/` folder, and reference 
 
 
 (to get the "raw" data from any of the links listed above, simply click on the `raw` button of the GitHub page and copy the URL to be able to read it in your computer using the `read_csv()` function)
+
+
+```r
+polynews <- read_csv("../data/flpoly_news_SP23.csv", col_types = cols())
+polynews<- head(polynews, 6)
+
+poly_tokens <- polynews %>% 
+  unnest_tokens(word, news_summary) %>%
+  anti_join(stop_words, by = "word") %>% # remove stopwords
+  group_by(news_title) %>% 
+  count(word, sort = TRUE) %>% 
+  top_n(9, n) %>% 
+  ungroup() %>% 
+  mutate(word = fct_inorder(word))
+# create a bar plot showing the token frequency
+ggplot(poly_tokens, aes(x = n, y = fct_rev(word), fill = news_title)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = NULL, y = NULL) +
+  scale_fill_viridis_d() +
+  facet_wrap(vars(news_title, n=2), scales = "free_y") +
+  theme_minimal()
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+
+```r
+polynews <- read_csv("../data/flpoly_news_SP23.csv", col_types = cols())
+poly_tokens <- polynews %>% 
+  unnest_tokens(word, news_summary) %>%
+  anti_join(stop_words, by = "word") %>% # remove stopwords
+  group_by(news_title) %>% 
+  count(word, sort = TRUE) %>% 
+  top_n(9, n) %>% 
+  ungroup() %>% 
+  mutate(word = fct_inorder(word))
+polywords <- poly_tokens[2]
+
+polywords_total<- polywords %>% count(word)
+```
+
+
+
+
+```r
+# poly_sent <- polynews %>% 
+#   unnest_tokens(word, text) %>%
+#   group_by(news_title) %>% 
+#   mutate(word_count = 1:n(),
+#          index = word_count %/% 500 + 1) %>% 
+#   inner_join(get_sentiments("bing")) %>%
+#   count(news_title, index = index, sentiment) %>% 
+#   pivot_wider(names_from = sentiment, values_from = n) %>%
+#   mutate(net_sentiment = positive - negative)
+
+poly_sent <- polywords %>% 
+  group_by(word) %>% 
+  mutate(word_count = 1:n(),
+         index = word_count %/% 500 + 1) %>% 
+  inner_join(get_sentiments("nrc")) %>%
+  count(word, index = index, sentiment) %>% 
+  pivot_wider(names_from = sentiment, values_from = n) %>%
+  mutate(net_sentiment = positive - negative)
+```
+
+```
+## Joining with `by = join_by(word)`
+```
+
+```
+## Warning in inner_join(., get_sentiments("nrc")): Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 1 of `x` matches multiple rows in `y`.
+## ℹ Row 1520 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship =
+##   "many-to-many"` to silence this warning.
+```
+
+```r
+poly_sent2 <- polywords_total %>% 
+  group_by(word) %>% 
+   inner_join(get_sentiments("nrc"))# %>%
+```
+
+```
+## Joining with `by = join_by(word)`
+```
+
+```r
+poly_sent2<-poly_sent2[!(poly_sent2$word=="university"),]
+
+
+total_sents <- poly_sent2 %>% group_by(sentiment) %>% 
+  summarise(sum_sent = sum(n),
+            .groups = 'drop')
+total_sents
+```
+
+```
+## # A tibble: 10 × 2
+##    sentiment    sum_sent
+##    <chr>           <int>
+##  1 anger             102
+##  2 anticipation      494
+##  3 disgust            41
+##  4 fear              181
+##  5 joy               331
+##  6 negative          260
+##  7 positive         1319
+##  8 sadness           118
+##  9 surprise          151
+## 10 trust             735
+```
+
+
+```r
+#write.csv(total_sents,"total_sents.csv", row.names=FALSE)
+```
+
+
+
+```r
+#read.csv("total_sents.csv")
+```
+
+
+
+```r
+poly_words_sentiment <- polywords %>% 
+  group_by(word) %>% 
+   inner_join(get_sentiments("nrc"))# %>%
+```
+
+```
+## Joining with `by = join_by(word)`
+```
+
+```
+## Warning in inner_join(., get_sentiments("nrc")): Detected an unexpected many-to-many relationship between `x` and `y`.
+## ℹ Row 1 of `x` matches multiple rows in `y`.
+## ℹ Row 1520 of `y` matches multiple rows in `x`.
+## ℹ If a many-to-many relationship is expected, set `relationship =
+##   "many-to-many"` to silence this warning.
+```
+
+```r
+poly_words_sentiment<-poly_words_sentiment[!(poly_words_sentiment$word=="university"),]
+#top10_words = poly_sent2 %>% group_by(sentiment) %>% top_n(10,n)
+# library(dplyr)
+top10_words = poly_sent2 %>% arrange(desc(n)) %>% group_by(sentiment) %>% slice(1:10)
+
+
+
+
+ggplot(top10_words, aes(x =fct_rev(reorder(word, -n)), y = n, fill = sentiment)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = NULL, y = NULL) +
+  scale_fill_viridis_d()+
+  facet_wrap(vars(sentiment),nrow=3,scales = "free",) +
+  theme_minimal()+coord_flip()#+
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+
+```r
+  # scale_fill_manual(values=c("red3",
+  #                            "#E05D09",
+  #                            "green3",
+  #                            "gray2",
+  #                            "violet",
+  #                            "#7b5c00",
+  #                            "yellow2",
+  #                            "#007BD8",
+  #                            "#037F25",
+  #                            "purple4"
+  #                            ))
+
+
+ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = sentiment)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = NULL, y = NULL) +
+  scale_fill_viridis_d()+
+  theme_minimal()+coord_flip()#+
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-15-2.png)<!-- -->
+
+```r
+  # scale_fill_manual(values=c("red3",
+  #                            "#E05D09",
+  #                            "green3",
+  #                            "gray2",
+  #                            "violet",
+  #                            "#7b5c00",
+  #                            "yellow2",
+  #                            "#007BD8",
+  #                            "#037F25",
+  #                            "purple4"
+  #                            ))
+  # 
+```
+
+
+```r
+ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = sentiment)) +
+  geom_col() +
+  guides(fill = FALSE) +
+  labs(x = NULL, y = NULL) +
+  #scale_fill_viridis_d()+
+  theme_minimal()+coord_flip()+
+  scale_fill_manual(values=c("red2",
+                             "#E05D09",
+                             "green3",
+                             "black",
+                             "yellow1",
+                             "brown4",
+                             "gold3",
+                             "#007ED3",
+                             "#037F25",
+                             "#73BFF0"
+                             ))
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+
+
+
+
+
+
+```r
+ggplot(total_sents, aes(x=sentiment, y=sum_sent)) + 
+  geom_bar(stat = "identity")+coord_flip()
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+
+```r
+ggplot(total_sents, aes(x=reorder(sentiment, +sum_sent), y=sum_sent)) + 
+  geom_bar(stat = "identity")+coord_flip()
+```
+
+![](lastname_project_03_files/figure-html/unnamed-chunk-17-2.png)<!-- -->
+
+```r
+# library(patternplot)
+# library(jpeg)
+# library(ggplot2)
+# 
+# childcare<-readJPEG(system.file("img", "childcare.jpg", package="patternplot"))
+# food<-readJPEG(system.file("img", "food.jpg", package="patternplot"))
+# housing <-readJPEG(system.file("img", "housing.jpg", package="patternplot"))
+# 
+# #Example 1
+# data <- read.csv(system.file("extdata", "monthlyexp.csv", package="patternplot"))
+# data<-data[which(data$Location=='City 1'),]
+# x<-factor(data$Type, c('Housing', 'Food',  'Childcare'))
+# y<-data$Amount
+# pattern.type<-list(housing, food, childcare)
+# imagebar(data,x, y,group=NULL,pattern.type=pattern.type,vjust=-1, hjust=0.5,
+#          frame.color='black',
+#          ylab='Monthly Expenses, Dollars')+ggtitle('(A) Bar Chart with Images')
+```
 
 
 ### Option (B): Data on Concrete Strength 
