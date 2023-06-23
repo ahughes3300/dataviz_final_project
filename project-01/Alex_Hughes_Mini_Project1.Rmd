@@ -14,6 +14,8 @@ library(ggplot2)
 source("../scripts/project1_scripts.R")
 library(RColorBrewer)
 
+#load csv
+birhtrate_cvs <- read_csv("../data/us_births_00_14.csv",col_types = cols())
 # Create a new dataframe that summarizes birthrate by year
 birthrate_by_year <- ddply(birhtrate_cvs,"year",numcolwise(sum))
 ```

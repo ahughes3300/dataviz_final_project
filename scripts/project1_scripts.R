@@ -1,7 +1,7 @@
 library(tidyverse)
 library(ggplot2)
 
-birhtrate_cvs <- read_csv("data/us_births_00_14.csv",col_types = cols())
+birhtrate_cvs <- read_csv("../data/us_births_00_14.csv",col_types = cols())
 ### dataframe for birthrate by year used for most graphs
 birthrate_by_year <- plyr::ddply(birhtrate_cvs,"year",numcolwise(sum))
 
