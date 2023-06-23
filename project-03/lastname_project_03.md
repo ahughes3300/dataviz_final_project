@@ -24,6 +24,7 @@ library(ggplot2)
 library(viridis)
 library(ggridges)
 library(tidytext)
+library(scales)
 weather_tpa <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/tpa_weather_2022.csv")
 # random sample 
 samplen<-sample_n(weather_tpa, 4)
@@ -266,13 +267,16 @@ ggplot(top10_words, aes(x =fct_rev(reorder(word, -n)), y = n, fill = sentiment))
   guides(fill = FALSE) +
   labs(x = NULL, y = NULL) +
   scale_fill_viridis_d()+
-  facet_wrap(vars(sentiment),nrow=3,scales = "free",) +
-  theme_minimal()+coord_flip()#+
+  facet_wrap(vars(sentiment),nrow=3,scales = "free") +
+  theme_minimal()+coord_flip()+theme(axis.text.x=element_text(size=7)) +
+scale_y_continuous(breaks= pretty_breaks())
 ```
 
 ![](lastname_project_03_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
 
 ```r
+                                     #,axis.text.y=element_text(size=12))
+#+
   # scale_fill_manual(values=c("red3",
   #                            "#E05D09",
   #                            "green3",
@@ -333,7 +337,6 @@ ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = s
 ```
 
 ![](lastname_project_03_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
-
 
 
 
