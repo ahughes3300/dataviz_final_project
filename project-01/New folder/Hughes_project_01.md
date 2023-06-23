@@ -7,7 +7,6 @@ output:
     toc_float: true
 ---
 
-# Data Visualization Project 01
 
 
 
@@ -23,7 +22,7 @@ birhtrate_cvs <- read_csv("../data/us_births_00_14.csv",col_types = cols())
 # Create a new dataframe that summarizes birthrate by year
 birthrate_by_year <- ddply(birhtrate_cvs,"year",numcolwise(sum))
 ```
-
+# Data Visualization Project 01
 
 ## Report
 

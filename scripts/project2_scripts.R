@@ -25,8 +25,36 @@ project2_graph1_map <- function(){
     plot.caption = element_text("State of Participants Origin")
     
   )
+ 
+  p2 
   
+
   ggplotly(p2) 
+}
+
+project2_graph1_mapB <- function(){
+  
+  ### create a choropleth
+  p <- plot_usmap(data = marathon_usa_sex_pace, values = "number", color = "black",)+scale_size_continuous(range = c(min(marathon_usa_sex_pace$n), max(marathon_usa_sex_pace$n)))+  scale_fill_continuous(
+    low = "#FEEBE7", high = "red", name = "Total", label = scales::comma
+  ) + theme(legend.position = "right")+
+    facet_wrap(~ Sex,ncol = 1,labeller = as_labeller(c('F' = "Female Pariticpants", 'M' = "Male Participants"))) +ggtitle(label = "Boston Marathon 2017")
+  
+  p2<-p + theme(
+    legend.position = c(1, .3), 
+    legend.background = element_rect(fill = "white", colour = NA),
+    strip.background = element_blank(),
+    plot.title = element_text(size=20),
+    strip.text = element_text(size=15),
+    panel.spacing = unit(2, "lines"),
+    plot.caption = element_text("State of Participants Origin")
+    
+  )
+  
+  p2 
+  
+  
+  
 }
 
 ### read in and process data
@@ -119,10 +147,6 @@ Project2_graph2_lm<-function(){
     annotate('text', x = 11000, y = 25500, label = 'Half Race',size = 5,angle='51', color= 'blue4')+ 
     annotate('text', x = 18000, y = 27500, label = 'Thrity K',size = 5,angle='41', color= 'green4')+labs(
     title = "Linear Model Line for Offical Time by Distance Time", x= "Distance Time in Seconds", y="Finish Time in Seconds")+theme_minimal()
-  
-  
-  
-  
-  
-  
+ 
 }
+

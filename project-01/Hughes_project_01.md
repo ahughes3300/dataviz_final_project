@@ -14,20 +14,6 @@ output:
 
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(plyr)
-library(ggplot2)
-source("../scripts/project1_scripts.R")
-library(RColorBrewer)
-
-#load csv
-birhtrate_cvs <- read_csv("../data/us_births_00_14.csv",col_types = cols())
-# Create a new dataframe that summarizes birthrate by year
-birthrate_by_year <- ddply(birhtrate_cvs,"year",numcolwise(sum))
-```
-
-
 ## Report
 
 ### Original Charts I Originally Planned
@@ -36,9 +22,7 @@ The data used was the U.S. births data for the years 2000 to 2014. This dataset 
 
 ### First Graph: Birthrates From 2000-2014
 
-```{r}
-graph1()
-```
+![](Hughes_project_01_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 -   I started exploring the data first by doing a general analysis of the total of births for every year. This graph was meant to be a very simple and general graph that can be used as a starting point. Using this simple line graph, I was able to see the years with the highest number of births.
 
@@ -48,9 +32,7 @@ graph1()
 
 ### Second Graph: Birthrates From 2000-2014 with Top Month
 
-```{r}
-graph2()
-```
+![](Hughes_project_01_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 -   I wanted to add some more complexity to the previous graph, so I created a second line graph and added the month with the most births or top month for each year as points on the line. This helped with telling the viewer which month had the highest birth per year and also works to mark the point at which the year intersects the brithrate line.
 
@@ -60,9 +42,7 @@ graph2()
 
 ### Third Graph: Birth Percentage and Total by Day for 2000-2014
 
-```{r}
-graph3()
-```
+![](Hughes_project_01_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 -   After exploring totals and months I decided to focus on days and percentages. I wanted to see the similarities or difference for the births of each year by the day. I took the percentage of births for each day by year and graphed this using facet_wrap. This produced several small graphs each showing the percentage of births that each day represents for that year. I originally thought about putting the total number of births for each day, but this seemed clunky with the large numbers that were being used. I looked for a way to use smaller numbers, so I used percentages. I decided to keep the totals as a color to help correlate with the percentages.
 
@@ -72,9 +52,7 @@ graph3()
 
 ### Finale Graph: Birthrates by Day for August 2005-2007
 
-```{r}
-graph4()
-```
+![](Hughes_project_01_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 -   For the final graph I was planning on using a lollipop graph. I liked how the facet-wrap worked out on the previous graph and chose to continue using it. I wanted to try another graph type that was different from the previous two graphs. I also wanted to break down some data into a subset and explore the data on a smaller zoomed in scale.
 
