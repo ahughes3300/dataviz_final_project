@@ -1,0 +1,103 @@
+state,Sex,number,mean_pace
+alaska,F,21,526.4285714
+alaska,M,31,431.1290323
+alabama,F,36,547.3888889
+alabama,M,44,514.7272727
+arkansas,F,26,548.5
+arkansas,M,30,514.9
+arizona,F,127,544.4015748
+arizona,M,143,522.5314685
+california,F,952,562.1523109
+california,M,1097,513.1722881
+colorado,F,252,541.2420635
+colorado,M,282,485.6808511
+connecticut,F,160,559.78125
+connecticut,M,217,527.3364055
+district of columbia,F,76,544.2894737
+district of columbia,M,80,489.7875
+delaware,F,21,535.3809524
+delaware,M,26,502.3846154
+florida,F,294,569.5612245
+florida,M,315,530.4888889
+georgia,F,145,557.9586207
+georgia,M,172,527.372093
+hawaii,F,21,532.3333333
+hawaii,M,16,519.25
+iowa,F,52,535.9807692
+iowa,M,59,494.9322034
+idaho,F,46,546.1956522
+idaho,M,47,504.1702128
+illinois,F,353,551.5014164
+illinois,M,418,508.5550239
+indiana,F,107,540.9158879
+indiana,M,160,518.1625
+kansas,F,43,534.627907
+kansas,M,49,500.7142857
+kentucky,F,48,532.1875
+kentucky,M,90,525.6444444
+louisiana,F,35,592.4857143
+louisiana,M,53,528.754717
+massachusetts,F,2467,632.84394
+massachusetts,M,2119,590.107126
+maryland,F,197,543.7614213
+maryland,M,199,496.8844221
+maine,F,75,588.2666667
+maine,M,111,511.963964
+michigan,F,208,546.5961538
+michigan,M,308,509.0292208
+minnesota,F,219,539.7853881
+minnesota,M,224,503.5625
+missouri,F,100,548.18
+missouri,M,103,502.3398058
+mississippi,F,15,548.9333333
+mississippi,M,12,479.75
+montana,F,20,560.55
+montana,M,16,479.4375
+north carolina,F,232,538.6594828
+north carolina,M,267,511.7078652
+north dakota,F,14,553.8571429
+north dakota,M,15,527.1333333
+nebraska,F,36,532.5555556
+nebraska,M,49,521.8571429
+new hampshire,F,158,601.0696203
+new hampshire,M,166,537.1506024
+new jersey,F,217,553.3917051
+new jersey,M,259,509.8610039
+new mexico,F,29,534.137931
+new mexico,M,36,509.3888889
+nevada,F,46,559.2826087
+nevada,M,39,525.2564103
+new york,F,641,548.2215289
+new york,M,683,507.1200586
+ohio,F,311,558.7073955
+ohio,M,382,511.4109948
+oklahoma,F,34,535.1470588
+oklahoma,M,47,517.5744681
+oregon,F,154,547.3246753
+oregon,M,158,508.9936709
+pennsylvania,F,390,544.7820513
+pennsylvania,M,452,504.710177
+rhode island,F,58,603.4310345
+rhode island,M,78,549.5769231
+south carolina,F,61,539.3934426
+south carolina,M,75,538.0933333
+south dakota,F,17,553.7647059
+south dakota,M,17,510.1176471
+tennessee,F,114,531.254386
+tennessee,M,123,511.1544715
+texas,F,493,552.9452333
+texas,M,562,516.5978648
+utah,F,246,564.2439024
+utah,M,154,516.2987013
+virginia,F,281,560.7935943
+virginia,M,283,506.7102473
+vermont,F,38,555.2894737
+vermont,M,42,508.9761905
+washington,F,247,552.708502
+washington,M,218,502.9633028
+wisconsin,F,185,548.3945946
+wisconsin,M,207,500.352657
+west virginia,F,15,558.5333333
+west virginia,M,26,498.6923077
+wyoming,F,10,542
+wyoming,M,11,523.3636364
