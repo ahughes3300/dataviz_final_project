@@ -52,4 +52,4 @@ In `project_03/` part 2 I did a NRC text sentiment analysis of a data set of art
 
 *I learned a lot about the data visualization, including grammar of graphics, Gestalt principles, R* syntax and organization, ggplot2, shiny applications, color principles, data story telling, *reproducible research,* using git and many more things*.*
 
-I really enjoyed the creativity this course allowed and hope to continue to hone in on that creative thought process. I would like to explore public data sets to make interesting discoveries. I would like to continue to learn more advanced visualization techniques and ctitical thinking.
+I really enjoyed the creativity this course allowed and hope to continue to hone in on that creative thought process. I would like to explore public data sets to make interesting discoveries. I would like to continue to learn more advanced visualization techniques and critical thinking.
