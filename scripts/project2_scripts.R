@@ -26,10 +26,11 @@ project2_graph1_map <- function(){
     
   )
  
-  p2 
-  
 
   ggplotly(p2) 
+  
+  # This is like ggsave, but for interactive HTML plots
+  #htmlwidgets::saveWidget(ggplotly(p2), "Marathon_2017_map.html")
 }
 
 project2_graph1_mapB <- function(){
@@ -99,7 +100,7 @@ Project2_graph3_coef<-function(){
     scale_color_discrete(name="Distance Run", labels=lables2) +
     scale_y_discrete(labels=lables2)
   
-  pco
+  ggplotly(pco)
 }
 
 Project2_graph2_lm<-function(){
@@ -133,7 +134,7 @@ Project2_graph2_lm<-function(){
  
   
   
-  ggplot() +
+  pmod<-ggplot() +
     geom_smooth(aes(x = tenK, y = OfficialTime), data = m2_model, 
                 method = "lm", se = FALSE, color = "red4") + 
     geom_smooth(aes(x = Half, y = OfficialTime), data = m2_model, 
@@ -147,6 +148,34 @@ Project2_graph2_lm<-function(){
     annotate('text', x = 11000, y = 25500, label = 'Half Race',size = 5,angle='51', color= 'blue4')+ 
     annotate('text', x = 18000, y = 27500, label = 'Thrity K',size = 5,angle='41', color= 'green4')+labs(
     title = "Linear Model Line for Offical Time by Distance Time", x= "Distance Time in Seconds", y="Finish Time in Seconds")+theme_minimal()
- 
+  pmod 
 }
 
+Project2_graph3_coefc<-function(){
+  ### create models
+  
+  ### create model 2
+  m2_model <- lm(OfficialTime ~ tenK + Half + thirtyK, data = marathon)
+  tidy(m2_model)
+  m2_coefs <- tidy(m2_model, conf.int = TRUE) %>% filter(term != "(Intercept)")  
+  
+  ### create model 3
+  m3_model <- lm(OfficialTime ~ tenK + Half + thirtyK+Age,data = marathon)
+  tidy(m3_model)
+  m3_coefs <- tidy(m3_model, conf.int = TRUE) %>% filter(term != "(Intercept)")  
+  
+  
+  ###create coefficent plot from models 
+  lables2<-c("30K","10K", "Half Race","Age")
+  
+  pco<-ggplot(m3_coefs,aes(x = estimate, y = fct_rev(term))) +
+    geom_pointrange(aes(xmin = conf.low, xmax = conf.high, color=fct_rev(term)),size=.75) +
+    geom_vline(xintercept = 0, color = "purple") + 
+    scale_color_brewer(palette="Set1") +
+    theme_minimal() +
+    labs(title = "Linear Model Coefficents for Finish Time", x= "Estimate Coefficent", y="Distance Run") +
+    scale_color_discrete(name="Distance Run", labels=lables2) +
+    scale_y_discrete(labels=lables2)
+  
+  pco
+}

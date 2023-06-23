@@ -2,7 +2,7 @@
 
 > Alex HUghes [ahughes3300\@floridapoly.edu](mailto:ahughes3300@floridapoly.edu){.email}
 
-Learn more about me in my [GitHub profile page](https://github.com/reiminer).
+Learn more about me in my [GitHub profile page](https://github.com/ahughes3300).
 
 The following is a sample of products created during the *"Data Visualization and Reproducible Research"* course.
 
@@ -10,7 +10,7 @@ The following is a sample of products created during the *"Data Visualization an
 
 ## Project 01
 
-In the `project_01/` folder you can find an Exploratory analysis the U.S. births data for the years 2000 to 2014. Here I used two line graphs, a faceted column graph and a lollipop graph to explore the data set.
+In the `project_01/` folder you can find an Exploratory analysis about  U.S. births data for the years 2000 to 2014. Here I used two line graphs, a facet wrap column graph and a lollipop graph to explore the data set.
 
 **Sample: Binned Birthrates From 2000-2014:**
 

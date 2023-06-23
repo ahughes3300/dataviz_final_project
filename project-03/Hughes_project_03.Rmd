@@ -13,7 +13,7 @@ In this exercise you will explore methods to create different types of data visu
 
 ## PART 1: Density Plots
 
-Using the dataset obtained from FSU's [Florida Climate Center](https://climatecenter.fsu.edu/climate-data-access-tools/downloadable-data), for a station at Tampa International Airport (TPA) for 2022, attempt to recreate the charts shown below which were generated using data from 2016. You can read the 2022 dataset using the code below:
+Using the dataset obtained from FSU's [Florida Climate Center](https://climatecenter.fsu.edu/climate-data-access-tools/downloadable-data), for a station at *Tampa International Airport (TPA)* for 2022, attempt to recreate the charts shown below which were generated using data from 2016. You can read the 2022 dataset using the code below:
 
 ```{r, message=FALSE, warning=FALSE,cache=TRUE, echo=FALSE}
 library(tidyverse)
@@ -34,9 +34,9 @@ Using the 2022 data:
 
 (a) **: Facet Wrap Histogram**
 
-    **Graph**: This histogram shows the number of days for each of the maximum temperature bins per month for Atlanta 2022.
+    **Graph**: This *histogram* shows the number of days for each of the maximum temperature bins per month for Atlanta 2022.
 
-    **Analysis** : July and August are the hottest months shown here. Jan and Feb are cooler months.
+    **Analysis** : July and August are the hottest months shown here. Jan and Feb are cooler months with Jan having some very low max temperature days.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 P1A_graph()
@@ -45,9 +45,9 @@ P1A_graph()
 
 (b) **Density Graph** :
 
-    **Graph**: This density graph shows the **proportions** of days are at of each temperature. This is for the entire year for 2022.
+    **Graph**: This density graph shows what the **proportions** of days are at for each temperature. This is for the entire year for 2022.
 
-    **Analysis** : Spikes in max temperature can be seen at *70, 80, 90* with a large jump at ***90***. Every ten degrees there is an increase in proportion of days of the higher temperature.
+    **Analysis** : **Spikes** in max temperature can be seen at *70, 80, 90* with a large jump at ***90***. Every ten degrees there is an increase in proportion of days of the higher temperature.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 source("../scripts/project3_scripts.R")
@@ -59,7 +59,7 @@ p1B_graph()
 
     **Graph**: The graph shows the **density** for max temp values similar to the above graph but instead of the *entire* *year* are divided by **month**.
 
-    **Analysis**: There is very **large spike** in max temperature in **July** which coincides with the analysis on the faceted plot above. This followed by **Aug** with *Jan* and *Feb* having much **lower** max temperatures. **July** seems to have been an extremely **hot** month in comparison to other months. People should be aware and take precautions outside in the heat.
+    **Analysis**: There is a very **large spike** in max temperature in **July** which coincides with the analysis on the *facet wrap* plot above. This is followed by *Aug* with *Jan* and *Feb* having much **lower** max temperatures. **July** seems to have been an extremely **hot** month in comparison to other months for the year. People should be aware and take precautions outside in the heat.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 source("../scripts/project3_scripts.R")
@@ -69,9 +69,9 @@ p1C_graph()
 
 (d) **Monthly Density Ridge Plots** :
 
-    **Graph**: The graph shows the **density** for values similar to the above graph but graphs them on **1** column and the mounds of each column overlap each other. This makes it each to see the trends of the density plots per month and not as condensed as the faceted graph above.
+    **Graph**: The graph shows the **density** for values similar to the above graph but places them in **1** column with many rows. The mounds of each column overlap each other. This makes it easy to see the trends of the density plots per month and not as condensed as the *facet wrap* graph above.
 
-    **Analysis**: It is easy to see that the **middle months** of the year such as **July** and **August** denominate with **higher** temperature max temp days. Not only are the far right they are also higher than the other months. The color fill also helps convey the temperatures with a *magma color scheme*.
+    **Analysis**: It is easy to see that the **middle months** of the year such as **July** and **August** denominate with **higher** temperature max temp days. Not only are they far right they are also higher than the other months indicating more days. The *color fill* also helps convey the temperatures with a *magma color scheme*.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 source("../scripts/project3_scripts.R")
@@ -81,7 +81,7 @@ p1D_graph()
 
 (e) Create a plot of your choice that uses the attribute for precipitation.
 
-    **Picked**: The *ridge density monthly map*. I chose this to use that opposite color scheme *Mako* to display precipitation. The clash in graphs is appealing as they are opposing elements, water is usually used to cool.
+    **Picked**: The *ridge density monthly map*. I chose the Mako color pallete to display precipitation. I chose this because the blue color opposes the hot red-yellow of the magma palette. The clash in graphs is appealing as they are opposing elements, water is usually used to cool.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, message=FALSE, warning=FALSE}
 
@@ -89,9 +89,9 @@ source("../scripts/project3_scripts.R")
 p1EE_graph()
 ```
 
--   **Data Used**: The days with precipitation **over** 0.1 inches were graphed here with the *density ridge graph*. The graph was *faceted* by month.
+-   **Data Used**: The days with precipitation **over** 0.1 inches were graphed here with the *density ridge graph*. The graph was *facet wraped* by month.
 
--   **Story:** Here it can be seen on the hump for April that it has the most amount of days with a heavy rain fall. Jan, Feb, Oct didn't have any days with more than 0.1 inches of precipitation. They would be good days for outdoor activities. Sept, Nov, Jul, and Jun had a small amount of days were precipitation approached or reached 3 inches. April is often referred to as a rainy month in many places, *April showers*, and it appears to be that case here as well.
+-   **Story:** Here it can be seen on the mound for April that it has the most amount of days with a heavy rain fall. Jan, Feb, Oct didn't have any days with more than 0.1 inches of precipitation. They would be good days for outdoor activities. Sept, Nov, Jul, and Jun had a small amount of days were precipitation approached or reached 3 inches. April is often referred to as a rainy month in many places, *April showers*, and it appears to be that case here as well.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 source("../scripts/project3_scripts.R")
@@ -99,7 +99,7 @@ p1E_graph()
 
 ```
 
--   **Data Used**: This graph includes all days were precipitation was **above** zero. Max temperature were graphed against precipitation and trend line was produced, default smooth line, with a shaded confidence area.
+-   **Data Used**: This graph includes all days where precipitation was **above** zero. Max temperature were graphed against precipitation and a trend line was produced, default smooth line, with a shaded confidence area.
 
 -   **Story:** Here it can be seen that days with a **higher** amount of precipitation tend to be on days where the max temperature was **above** 80. The trend line shows that it is much more likely to get a heavy rain on hotter days than cooler days.
 
@@ -131,11 +131,11 @@ P2_graph_bar()
 
 -   **Data Source**: [flpoly_news_SP23.csv](https://github.com/reisanar/datasets/blob/master/flpoly_news_SP23.csv)
 
--   **Analysis:** Positive is by far the largest of the NRC sentiments for the articles with disgust being the lowest value. Overall all good emotions are associated with Florida Polytechnic in the articles.
+-   **Analysis:** Positive is by far the largest of the NRC sentiments for the articles with disgust being the lowest value sentiment. Overall all good emotions are associated with Florida Polytechnic in the articles. Middle values include fear and negativity.
 
--   **Issues**: The word University was removed due to be an extreme outline, over 400 occurrences, and also being associated with the name Florida Polytechnic University as a place.
+-   **Issues**: The word University was removed due to being an extreme outliner, over 400 occurrences, and also being associated with the name Florida Polytechnic University as a place.
 
--   **Story:** The story that can be told here is what is being written about Florida Polytechnic University is associated with positive sentiment and low on negative sentiment. Public peception of Florida Polytechnic is good.
+-   **Story:** The story that can be told here is what is being written about Florida Polytechnic University is associated with positive sentiment and low on negative sentiment. Public perception of Florida Polytechnic is good at least in article form.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, message=FALSE, warning=FALSE}
 source("../scripts/project3_scripts.R")
@@ -147,8 +147,8 @@ P2_graph_facet()
 
 -   **Data Source**: [*flpoly_news_SP23.csv*](https://github.com/reisanar/datasets/blob/master/flpoly_news_SP23.csv)
 
--   **Analysis:** This is more of a granular approach than the generalized graph above. Here the details of the top 10 words per sentiment are shown. Community is the number 1 positive word and fall is the number 1 negative word. It is interesting if *NRC* should be separated out by meaning of the word, it is likely that fall here means a season and not actually falling to the ground.
+-   **Analysis:** This is more of a granular approach than the generalized graph above. Here the details of the top 10 words per sentiment are shown. Community is the number 1 positive word and fall is the number 1 negative word. It is interesting if *NRC* should be separated out by meaning of the word, it is likely that fall here means a season and not actually falling to the ground. Pandemic tops the fear sentiment, this is likely due the recent pandemic and articles heavily writing about it 2020-2022
 
--   **Issues**: The word University was removed due to be an extreme outline and also being associated with the name Florida Polytechnic University as a place.
+-   **Issues**: The word University was removed due to being an extreme outliner and also being associated with the name Florida Polytechnic University as a place.
 
--   **Story:** The story that can be told here is once again an overall **positive** sentiment. It is easy to see from the graph that positive sentiments like joy and trust are much thicker than negative sentiments such as fear and sadness.
+-   **Story:** The story that can be told here is once again an overall **positive** sentiment. It is easy to see from the graph that positive sentiments like joy and trust are much thicker than negative sentiments such as fear and sadness. It seems for anger articles use the word challenging several times. Community and Career are high occurrence words, universities are often associated with careers and community as well.
