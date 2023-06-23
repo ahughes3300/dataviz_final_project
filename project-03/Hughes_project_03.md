@@ -21,54 +21,55 @@ See <https://www.reisanar.com/slides/relationships-models#10> for a reminder on 
 
 Using the 2022 data:
 
-(a) Create a plot like the one below:
+(a) **: Faceted Histogram**
 
-<img src="https://github.com/reisanar/figs/raw/master/tpa_max_temps_facet.png" width="80%" style="display: block; margin: auto;" />
+    **Graph**: This histogram shows the number of days for each of the maximum temperature bins per month for Atlanta 2022.
 
-Hint: the option `binwidth = 3` was used with the `geom_histogram()` function.
+    **Analysis** : July and August are the hottest months shown here. Jan and Feb are cooler months.
+
+<img src="Hughes_project_03_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
+
+(b) **Density Graph** :
+
+    **Graph**: This density graph shows the **proportions** of days are at of each temperature. This is for the entire year for 2022.
+
+    **Analysis** : Spikes in max temperature can be seen at *70, 80, 90* with a large jump at ***90***. Every ten degrees there is an increase in proportion of days of the higher temperature.
 
 <img src="Hughes_project_03_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
 
-(b) Create a plot like the one below:
+(c) **Faceted Monthly Density Plots** :
 
-<img src="https://github.com/reisanar/figs/raw/master/tpa_max_temps_density.png" width="80%" style="display: block; margin: auto;" />
+    **Graph**: The graph shows the **density** for max temp values similar to the above graph but instead of the *entire* *year* are divided by **month**.
 
-Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw = 0.5`.
+    **Analysis**: There is very **large spike** in max temperature in **July** which coincides with the analysis on the faceted plot above. This followed by **Aug** with *Jan* and *Feb* having much **lower** max temperatures. **July** seems to have been an extremely **hot** month in comparison to other months. People should be aware and take precautions outside in the heat.
+
+<img src="Hughes_project_03_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" />
+
+(d) **Monthly Density Ridge Plots** :
+
+    **Graph**: The graph shows the **density** for values similar to the above graph but graphs them on **1** column and the mounds of each column overlap each other. This makes it each to see the trends of the density plots per month and not as condensed as the faceted graph above.
+
+    **Analysis**: It is easy to see that the **middle months** of the year such as **July** and **August** denominate with **higher** temperature max temp days. Not only are the far right they are also higher than the other months. The color fill also helps convey the temperatures with a *magma color scheme*.
 
 <img src="Hughes_project_03_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
 
-(c) Create a plot like the one below:
+(e) Create a plot of your choice that uses the attribute for precipitation.
 
-<img src="https://github.com/reisanar/figs/raw/master/tpa_max_temps_density_facet.png" width="80%" style="display: block; margin: auto;" />
+    **Picked**: The *ridge density monthly map*. I chose this to use that opposite color scheme *Mako* to display precipitation. The clash in graphs is appealing as they are opposing elements, water is usually used to cool.
 
-Hint: default options for `geom_density()` were used.
-
-<img src="Hughes_project_03_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
-
-(d) Generate a plot like the chart below:
-
-<img src="https://github.com/reisanar/figs/raw/master/tpa_max_temps_ridges_plasma.png" width="80%" style="display: block; margin: auto;" />
-
-Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function paying close attention to the `quantile_lines` and `quantiles` parameters. The plot above uses the `plasma` option (color scale) for the *viridis* palette.
-
-<img src="Hughes_project_03_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
-
-(e) Create a plot of your choice that uses the attribute for precipitation *(values of -99.9 for temperature or -99.99 for precipitation represent missing data)*.
-
-<img src="Hughes_project_03_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="Hughes_project_03_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
 -   **Data Used**: The days with precipitation **over** 0.1 inches were graphed here with the *density ridge graph*. The graph was *faceted* by month.
 
 -   **Story:** Here it can be seen on the hump for April that it has the most amount of days with a heavy rain fall. Jan, Feb, Oct didn't have any days with more than 0.1 inches of precipitation. They would be good days for outdoor activities. Sept, Nov, Jul, and Jun had a small amount of days were precipitation approached or reached 3 inches. April is often referred to as a rainy month in many places, *April showers*, and it appears to be that case here as well.
 
-<img src="Hughes_project_03_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="Hughes_project_03_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
 
 -   **Data Used**: This graph includes all days were precipitation was **above** zero. Max temperature were graphed against precipitation and trend line was produced, default smooth line, with a shaded confidence area.
 
 -   **Story:** Here it can be seen that days with a **higher** amount of precipitation tend to be on days where the max temperature was **above** 80. The trend line shows that it is much more likely to get a heavy rain on hotter days than cooler days.
 
 ## PART 2
-
 
 ### Option (A): Visualizing Text Data
 
@@ -86,7 +87,7 @@ Make sure to include a copy of the dataset in the `data/` folder, and reference 
 
 (to get the "raw" data from any of the links listed above, simply click on the `raw` button of the GitHub page and copy the URL to be able to read it in your computer using the `read_csv()` function)
 
-<img src="Hughes_project_03_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="Hughes_project_03_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 #### NRC Sentiment Totals for All FL Poly Articles
 
@@ -98,7 +99,7 @@ Make sure to include a copy of the dataset in the `data/` folder, and reference 
 
 -   **Story:** The story that can be told here is what is being written about Florida Polytechnic University is associated with positive sentiment and low on negative sentiment. Public peception of Florida Polytechnic is good.
 
-<img src="Hughes_project_03_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="Hughes_project_03_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
 
 #### ***NRC*** **Sentiment Totals for All FL Poly Articles**
 

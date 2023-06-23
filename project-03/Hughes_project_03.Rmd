@@ -32,26 +32,22 @@ See <https://www.reisanar.com/slides/relationships-models#10> for a reminder on 
 
 Using the 2022 data:
 
-(a) Create a plot like the one below:
+(a) **: Faceted Histogram**
 
-```{r, echo = FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("https://github.com/reisanar/figs/raw/master/tpa_max_temps_facet.png")
-```
+    **Graph**: This histogram shows the number of days for each of the maximum temperature bins per month for Atlanta 2022.
 
-Hint: the option `binwidth = 3` was used with the `geom_histogram()` function.
+    **Analysis** : July and August are the hottest months shown here. Jan and Feb are cooler months.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 P1A_graph()
 
 ```
 
-(b) Create a plot like the one below:
+(b) **Density Graph** :
 
-```{r, echo = FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("https://github.com/reisanar/figs/raw/master/tpa_max_temps_density.png")
-```
+    **Graph**: This density graph shows the **proportions** of days are at of each temperature. This is for the entire year for 2022.
 
-Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw = 0.5`.
+    **Analysis** : Spikes in max temperature can be seen at *70, 80, 90* with a large jump at ***90***. Every ten degrees there is an increase in proportion of days of the higher temperature.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 source("../scripts/project3_scripts.R")
@@ -59,13 +55,11 @@ p1B_graph()
 
 ```
 
-(c) Create a plot like the one below:
+(c) **Faceted Monthly Density Plots** :
 
-```{r, echo = FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("https://github.com/reisanar/figs/raw/master/tpa_max_temps_density_facet.png")
-```
+    **Graph**: The graph shows the **density** for max temp values similar to the above graph but instead of the *entire* *year* are divided by **month**.
 
-Hint: default options for `geom_density()` were used.
+    **Analysis**: There is very **large spike** in max temperature in **July** which coincides with the analysis on the faceted plot above. This followed by **Aug** with *Jan* and *Feb* having much **lower** max temperatures. **July** seems to have been an extremely **hot** month in comparison to other months. People should be aware and take precautions outside in the heat.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 source("../scripts/project3_scripts.R")
@@ -73,13 +67,11 @@ p1C_graph()
 
 ```
 
-(d) Generate a plot like the chart below:
+(d) **Monthly Density Ridge Plots** :
 
-```{r, echo = FALSE, out.width="80%", fig.align='center'}
-knitr::include_graphics("https://github.com/reisanar/figs/raw/master/tpa_max_temps_ridges_plasma.png")
-```
+    **Graph**: The graph shows the **density** for values similar to the above graph but graphs them on **1** column and the mounds of each column overlap each other. This makes it each to see the trends of the density plots per month and not as condensed as the faceted graph above.
 
-Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function paying close attention to the `quantile_lines` and `quantiles` parameters. The plot above uses the `plasma` option (color scale) for the *viridis* palette.
+    **Analysis**: It is easy to see that the **middle months** of the year such as **July** and **August** denominate with **higher** temperature max temp days. Not only are the far right they are also higher than the other months. The color fill also helps convey the temperatures with a *magma color scheme*.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, warning=FALSE, out.width="80%", message=FALSE}
 source("../scripts/project3_scripts.R")
@@ -87,7 +79,9 @@ p1D_graph()
 
 ```
 
-(e) Create a plot of your choice that uses the attribute for precipitation *(values of -99.9 for temperature or -99.99 for precipitation represent missing data)*.
+(e) Create a plot of your choice that uses the attribute for precipitation.
+
+    **Picked**: The *ridge density monthly map*. I chose this to use that opposite color scheme *Mako* to display precipitation. The clash in graphs is appealing as they are opposing elements, water is usually used to cool.
 
 ```{r, echo = FALSE, fig.align='center', cache=TRUE, message=FALSE, warning=FALSE}
 
@@ -110,7 +104,6 @@ p1E_graph()
 -   **Story:** Here it can be seen that days with a **higher** amount of precipitation tend to be on days where the max temperature was **above** 80. The trend line shows that it is much more likely to get a heavy rain on hotter days than cooler days.
 
 ## PART 2
-
 
 ### Option (A): Visualizing Text Data
 
