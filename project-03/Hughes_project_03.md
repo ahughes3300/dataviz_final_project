@@ -21,7 +21,7 @@ See <https://www.reisanar.com/slides/relationships-models#10> for a reminder on 
 
 Using the 2022 data:
 
-(a) **: Faceted Histogram**
+(a) **: Facet Wrap Histogram**
 
     **Graph**: This histogram shows the number of days for each of the maximum temperature bins per month for Atlanta 2022.
 
@@ -37,7 +37,7 @@ Using the 2022 data:
 
 <img src="Hughes_project_03_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
 
-(c) **Faceted Monthly Density Plots** :
+(c) **Facet Wrap Monthly Density Plots** :
 
     **Graph**: The graph shows the **density** for max temp values similar to the above graph but instead of the *entire* *year* are divided by **month**.
 

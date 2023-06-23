@@ -51,7 +51,7 @@ source("../scripts/project1_scripts.R")
 graph2()
 ```
 
--   I wanted to add some more complexity to the previous graph, so I created a second line graph and added the month with the most births or top month for each year as points on the line. This helped with telling the viewer which month had the highest birth per year and also works to mark the point at which the year intersects the brithrate line.
+-   I wanted to add some more complexity to the previous graph, so I created a second line graph and added the month with the most births or top month for each year as points on the line. This helped with telling the viewer which month had the highest birth per year and also works to mark the point at which the year intersects the brithrate line. To differentiate it from the prevous graph I treid a different scale of binning. This graph is more boxy but still is the same shape.
 
 -   I used dark colors for from pallet Dark2 to help contrast with the light gray background and also used a dark color for the line. I didn't want to use black, so I used steelblue4 as it was dark but not totally devoid of color. I also added a full range of years at the x-axis to help balance the bottom the graph with the title at the top and by doing this I eliminated the need for an x-axis title all together as it was obvious what the axis represented.
 

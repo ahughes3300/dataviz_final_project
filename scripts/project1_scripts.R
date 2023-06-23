@@ -13,7 +13,7 @@ graph1 <-function(){
   stat_summary(fun = sum, geom="line", colour = "red", linewidth = 1) +
   labs(title = "Birthrates From 2000-2014", colour ="Top Month") +
   xlab("Year 2000-2014")+ylab("Total Births for Year")
-  
+   
   graph1
 }
 
@@ -36,9 +36,10 @@ graph2 <- function(){
     scale_x_continuous(breaks = birthrate_by_year$year) +
     scale_color_discrete(name  ="Top Month")+
     geom_point()+scale_color_brewer(palette="Dark2") +
-    labs(title = "Birthrates From 2000-2014 with Top Month", colour ="Top Month") +
+    labs(title = "Binned Scale Birthrates From 2000-2014 with Top Month", colour ="Top Month") +
     xlab("") +
-    ylab("Total Birts per Year")
+    ylab("Total Birts per Year")+scale_x_binned()+scale_y_binned()
+    #scale_x_log10()+scale_y_log10() 
   
   graph2
 }
