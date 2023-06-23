@@ -25,24 +25,13 @@ library(viridis)
 library(ggridges)
 library(tidytext)
 library(scales)
+source("scripts.R")
 weather_tpa <- read_csv("https://raw.githubusercontent.com/reisanar/datasets/master/tpa_weather_2022.csv")
 # random sample 
 samplen<-sample_n(weather_tpa, 4)
 ```
 
 See https://www.reisanar.com/slides/relationships-models#10 for a reminder on how to use this type of dataset with the `lubridate` package for dates and times (example included in the slides uses data from 2016).
-
-
-```
-## Warning: Removed 3 rows containing non-finite values (`stat_bin()`).
-```
-
-```
-## Warning: Removed 24 rows containing missing values (`geom_bar()`).
-```
-
-<img src="lastname_project_03_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" />
-
 
 
 Using the 2022 data: 
@@ -54,6 +43,12 @@ Using the 2022 data:
 Hint: the option `binwidth = 3` was used with the `geom_histogram()` function.
 
 
+```r
+P1A_graph()
+```
+
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" />
+
 
 
 (b) Create a plot like the one below:
@@ -63,21 +58,12 @@ Hint: the option `binwidth = 3` was used with the `geom_histogram()` function.
 Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw = 0.5`.
 
 
-
-```
-## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
-
-```
-## Warning: Removed 3 rows containing non-finite values (`stat_density()`).
+```r
+source("scripts.R")
+p1B_graph()
 ```
 
 <img src="lastname_project_03_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" />
-
 
 
 (c) Create a plot like the one below:
@@ -87,17 +73,9 @@ Hint: check the `kernel` parameter of the `geom_density()` function, and use `bw
 Hint: default options for `geom_density()` were used. 
 
 
-
-```
-## Warning: The `<scale>` argument of `guides()` cannot be `FALSE`. Use "none" instead as
-## of ggplot2 3.3.4.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
-
-```
-## Warning: Removed 2 rows containing non-finite values (`stat_density()`).
+```r
+source("scripts.R")
+p1C_graph()
 ```
 
 <img src="lastname_project_03_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" />
@@ -111,6 +89,46 @@ Hint: default options for `geom_density()` were used.
 Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function paying close attention to the `quantile_lines` and `quantiles` parameters. The plot above uses the `plasma` option (color scale) for the _viridis_ palette.
 
 
+```r
+source("scripts.R")
+p1D_graph()
+```
+
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
+
+(e) Create a plot of your choice that uses the attribute for precipitation _(values of -99.9 for temperature or -99.99 for precipitation represent missing data)_.
+
+
+```r
+source("scripts.R")
+p1E_graph()
+```
+
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+
+```r
+  tpa_clean <- weather_tpa %>% 
+    unite("doy", year, month, day, sep = "-") %>% 
+    mutate(doy = ymd(doy), 
+           max_temp = as.double(max_temp), 
+           min_temp = as.double(min_temp), 
+           precipitation = 1 * as.double(precipitation))
+
+
+t2 <- tpa_clean %>% filter(precipitation >= 0.1
+)
+
+
+  ggplot(t2, aes(x = precipitation, y = month(ymd(doy),label=TRUE,abbr = FALSE), fill = stat(x))) +
+    geom_density_ridges_gradient(size=1,quantile_lines = TRUE,quantiles = 2)+
+    scale_fill_viridis_c(name = "Depth", option = "G") +
+    theme_minimal()+xlab("Precipitation (inches)") + ylab("")+
+    theme(axis.text = element_text(size = 13),text = element_text(size = 17),legend.title = element_blank()) +
+    labs(color = NULL)  +
+    xlab("Precipitation (inches)") + ylab("Number of Days")+ggtitle("Days Precipitation Above 0.1 inches")
+```
 
 ```
 ## Warning: `stat(x)` was deprecated in ggplot2 3.4.0.
@@ -121,7 +139,7 @@ Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function payi
 ```
 
 ```
-## Picking joint bandwidth of 1.87
+## Picking joint bandwidth of 0.246
 ```
 
 ```
@@ -132,27 +150,18 @@ Hint: use the`{ggridges}` package, and the `geom_density_ridges()` function payi
 ## generated.
 ```
 
-<img src="lastname_project_03_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />
-
-
-
-(e) Create a plot of your choice that uses the attribute for precipitation _(values of -99.9 for temperature or -99.99 for precipitation represent missing data)_.
-
+![](lastname_project_03_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 ```r
-t2 <- tpa_clean %>%
-filter(precipitation > 0)
-
-
-ggplot(tpa_clean, aes(y=max_temp, x=precipitation)) +
-  geom_point(color="red4")+geom_smooth(fill="lightblue", color="blue4")+theme_classic()
+  ggplot(t2, aes(precipitation, fill=month(ymd(doy),))) +
+    geom_histogram(binwidth=1,colour = "white",
+                   lwd = 0.8,
+                   linetype = 1,
+                    position = "identity")+ facet_wrap(~month(ymd(doy),label=TRUE,abbr = FALSE))+ scale_fill_viridis(guide = "none")+theme_bw() + theme(axis.text = element_text(size = 13),text = element_text(size = 17))  +
+    xlab("Precipitation (inches)") + ylab("Number of Days")+ggtitle("Days Precipitation Above 0.1 inches")
 ```
 
-```
-## `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
-```
-
-![](lastname_project_03_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](lastname_project_03_files/figure-html/unnamed-chunk-11-2.png)<!-- -->
 
 ## PART 2 
 
@@ -175,169 +184,5 @@ Make sure to include a copy of the dataset in the `data/` folder, and reference 
 
 
 (to get the "raw" data from any of the links listed above, simply click on the `raw` button of the GitHub page and copy the URL to be able to read it in your computer using the `read_csv()` function)
-
-
-
-```r
-polynews <- read_csv("../data/flpoly_news_SP23.csv", col_types = cols())
-poly_tokens <- polynews %>% 
-  unnest_tokens(word, news_summary) %>%
-  anti_join(stop_words, by = "word") %>% # remove stopwords
-  group_by(news_title) %>% 
-  count(word, sort = TRUE) %>% 
-  top_n(9, n) %>% 
-  ungroup() %>% 
-  mutate(word = fct_inorder(word))
-polywords <- poly_tokens[2]
-
-polywords_total<- polywords %>% count(word)
-```
-
-
-
-
-```r
-poly_sent2 <- polywords_total %>% 
-  group_by(word) %>% 
-   inner_join(get_sentiments("nrc"))# %>%
-```
-
-```
-## Joining with `by = join_by(word)`
-```
-
-```r
-poly_sent2<-poly_sent2[!(poly_sent2$word=="university"),]
-
-
-total_sents <- poly_sent2 %>% group_by(sentiment) %>% 
-  summarise(sum_sent = sum(n),
-            .groups = 'drop')
-total_sents
-```
-
-```
-## # A tibble: 10 × 2
-##    sentiment    sum_sent
-##    <chr>           <int>
-##  1 anger             102
-##  2 anticipation      494
-##  3 disgust            41
-##  4 fear              181
-##  5 joy               331
-##  6 negative          260
-##  7 positive         1319
-##  8 sadness           118
-##  9 surprise          151
-## 10 trust             735
-```
-
-
-
-
-```r
-poly_words_sentiment <- polywords %>% 
-  group_by(word) %>% 
-   inner_join(get_sentiments("nrc"))# %>%
-```
-
-```
-## Joining with `by = join_by(word)`
-```
-
-```
-## Warning in inner_join(., get_sentiments("nrc")): Detected an unexpected many-to-many relationship between `x` and `y`.
-## ℹ Row 1 of `x` matches multiple rows in `y`.
-## ℹ Row 1520 of `y` matches multiple rows in `x`.
-## ℹ If a many-to-many relationship is expected, set `relationship =
-##   "many-to-many"` to silence this warning.
-```
-
-```r
-poly_words_sentiment<-poly_words_sentiment[!(poly_words_sentiment$word=="university"),]
-#top10_words = poly_sent2 %>% group_by(sentiment) %>% top_n(10,n)
-# library(dplyr)
-top10_words = poly_sent2 %>% arrange(desc(n)) %>% group_by(sentiment) %>% slice(1:10)
-
-
-
-
-ggplot(top10_words, aes(x =fct_rev(reorder(word, -n)), y = n, fill = sentiment)) +
-  geom_col() +
-  guides(fill = FALSE) +
-  labs(x = NULL, y = NULL) +
-  scale_fill_viridis_d()+
-  facet_wrap(vars(sentiment),nrow=3,scales = "free") +
-  theme_minimal()+coord_flip()+theme(axis.text.x=element_text(size=7)) +
-scale_y_continuous(breaks= pretty_breaks())
-```
-
-![](lastname_project_03_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
-
-```r
-                                     #,axis.text.y=element_text(size=12))
-#+
-  # scale_fill_manual(values=c("red3",
-  #                            "#E05D09",
-  #                            "green3",
-  #                            "gray2",
-  #                            "violet",
-  #                            "#7b5c00",
-  #                            "yellow2",
-  #                            "#007BD8",
-  #                            "#037F25",
-  #                            "purple4"
-  #                            ))
-
-
-ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = sentiment)) +
-  geom_col() +
-  guides(fill = FALSE) +
-  labs(x = NULL, y = NULL) +
-  scale_fill_viridis_d()+
-  theme_minimal()+coord_flip()#+
-```
-
-![](lastname_project_03_files/figure-html/unnamed-chunk-13-2.png)<!-- -->
-
-```r
-  # scale_fill_manual(values=c("red3",
-  #                            "#E05D09",
-  #                            "green3",
-  #                            "gray2",
-  #                            "violet",
-  #                            "#7b5c00",
-  #                            "yellow2",
-  #                            "#007BD8",
-  #                            "#037F25",
-  #                            "purple4"
-  #                            ))
-  # 
-```
-
-
-```r
-ggplot(total_sents, aes(x =reorder(sentiment, +sum_sent), y = sum_sent, fill = sentiment)) +
-  geom_col() +
-  guides(fill = FALSE) +
-  labs(x = NULL, y = NULL) +
-  #scale_fill_viridis_d()+
-  theme_minimal()+coord_flip()+
-  scale_fill_manual(values=c("red2",
-                             "#E05D09",
-                             "green3",
-                             "black",
-                             "yellow1",
-                             "brown4",
-                             "gold3",
-                             "#007ED3",
-                             "#037F25",
-                             "#73BFF0"
-                             ))
-```
-
-![](lastname_project_03_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
-
-
-
+<img src="lastname_project_03_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /><img src="lastname_project_03_files/figure-html/unnamed-chunk-12-2.png" style="display: block; margin: auto;" />
 
