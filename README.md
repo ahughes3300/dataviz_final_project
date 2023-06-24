@@ -1,6 +1,6 @@
 # Data Visualization and Reproducible Research
 
-> Alex HUghes [ahughes3300\@floridapoly.edu](mailto:ahughes3300@floridapoly.edu){.email}
+> Alex Hughes [ahughes3300\@floridapoly.edu](mailto:ahughes3300@floridapoly.edu){.email}
 
 Learn more about me in my [GitHub profile page](https://github.com/ahughes3300).
 
